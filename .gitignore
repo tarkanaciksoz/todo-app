@@ -1,8 +1,6 @@
 .DS_Store
 /dist
 
-# local env files
-.env
 
 # Log files
 npm-debug.log*
