@@ -1,0 +1,70 @@
+version: '3.9'
+services:
+  frontend:
+    build:
+      context: ./front-end/
+      args:
+        - ENV=dev
+    restart: unless-stopped
+    container_name: todo-app-frontend
+    depends_on:
+      - backend
+    networks:
+      - todo-list-network
+    ports:
+      - 80:80
+    links:
+      - backend
+
+  backend:
+    build:
+      context: .
+      args:
+        - ENV=dev
+    restart: unless-stopped
+    container_name: todo-app-backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      WAIT_HOSTS: mysql:3306
+      WAIT_HOSTS_TIMEOUT: 300
+      WAIT_SLEEP_INTERVAL: 30
+      WAIT_HOST_CONNECT_TIMEOUT: 30
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - todo-list-network
+    ports:
+      - 9090:9090
+    links:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    container_name: todo-app-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - todo-list-network
+    volumes:
+      - ./create-local-db:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: mysqladmin ping -h localhost -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      interval: 2s
+      timeout: 20s
+      retries: 10
+
+networks:
+  todo-list-network:
+    name: todo-list-network
+    driver: bridge
+    external: true
