@@ -18,7 +18,11 @@
             </p>
           </div>
           <div class="todo-col-7">
-            <div class="todo" :id="'mark-todo-' + todo.id" @click="markTodo(index)" :style="todo.marked == 1 ? 'text-decoration:line-through' : 'text-decoration:none'">{{ todo.value }}</div>
+            <div class="todo">
+              <span :id="'mark-todo-' + todo.id" @click="markTodo(index)" :style="todo.marked == 1 ? 'text-decoration:line-through' : 'text-decoration:none'">
+                {{ todo.value }}
+              </span>
+            </div>
           </div>
           <div class="todo-col-4">
             <button class="delete-button" :id="'delete-todo-' + todo.id" @click="deleteTodo(todo.id)">DELETE</button>
