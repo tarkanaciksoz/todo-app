@@ -34,7 +34,13 @@ type Request struct {
 
 func TestTodoHandler(t *testing.T) {
 	logger := log.New(os.Stdout, "api-todo-list: ", log.LstdFlags)
-	err := godotenv.Load("../.env")
+	appEnv := os.Getenv("APP_ENV")
+	if appEnv == "" {
+		logger.Printf("You must declare APP_ENV before run")
+		os.Exit(1)
+	}
+
+	err := godotenv.Load("../.env" + "." + appEnv)
 	if err != nil {
 		logger.Printf("Error while Read .env file: %s\n", err.Error())
 		os.Exit(1)

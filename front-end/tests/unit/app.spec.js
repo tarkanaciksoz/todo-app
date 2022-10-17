@@ -5,7 +5,7 @@ describe('App.vue', () => {
     it('assignment given, when, then - 1', async () => {
       const wrapper = shallowMount(App)
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
       
       const todo = {
         id: 1,
@@ -18,7 +18,7 @@ describe('App.vue', () => {
       await wrapper.find('#add-todo-button').trigger('click')
 
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       expect(wrapper.vm.todoList[0].id).toBe(todo.id)
       expect(wrapper.vm.todoList[0].value).toBe(todo.value)
@@ -28,7 +28,7 @@ describe('App.vue', () => {
     it('assignment given, when, then - 2', async () => {
       const wrapper = shallowMount(App)
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       const todo = {
           id: 2,
@@ -39,7 +39,7 @@ describe('App.vue', () => {
       await wrapper.find('#add-todo-button').trigger('click')
 
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       expect(wrapper.vm.todoList[1].id).toBe(todo.id)
       expect(wrapper.vm.todoList[1].value).toBe(todo.value)
@@ -49,12 +49,12 @@ describe('App.vue', () => {
     it('assignment given, when, then - 3', async () => {
       const wrapper = shallowMount(App)
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       //clear todo list
       await wrapper.find('#deleteAllButton').trigger('click')
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       const todo = {
         id: 1,
@@ -64,7 +64,7 @@ describe('App.vue', () => {
       wrapper.find('#todo-input').setValue(todo.value)
       await wrapper.find('#add-todo-button').trigger('click')
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       expect(wrapper.vm.todoList[0].id).toBe(todo.id)
       expect(wrapper.vm.todoList[0].value).toBe(todo.value)
@@ -73,14 +73,14 @@ describe('App.vue', () => {
 
       wrapper.find('#mark-todo-' + todo.id).trigger('click')
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       expect(wrapper.vm.todoList[0].marked).toBe(1)
     })
     it('assignment given, when, then - 4', async () => {
       const wrapper = shallowMount(App)
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       const todo = {
         id: 1,
@@ -89,18 +89,18 @@ describe('App.vue', () => {
 
       wrapper.find('#mark-todo-' + todo.id).trigger('click')
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
       expect(wrapper.vm.todoList[0].marked).toBe(0)
     })
     it('assignment given, when, then - 5', async () => {
       const wrapper = shallowMount(App)
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       //clear todo-list
       await wrapper.find('#deleteAllButton').trigger('click')
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       const todo = {
         id: 1,
@@ -110,7 +110,7 @@ describe('App.vue', () => {
       wrapper.find('#todo-input').setValue(todo.value)
       await wrapper.find('#add-todo-button').trigger('click')
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       expect(wrapper.vm.todoList[0].id).toBe(todo.id)
       expect(wrapper.vm.todoList[0].value).toBe(todo.value)
@@ -119,13 +119,13 @@ describe('App.vue', () => {
 
       wrapper.find('#delete-todo-' + todo.id).trigger('click')
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
       expect(wrapper.vm.todoList.length).toBe(0)
     })
     it('assignment given, when, then - 5', async () => {
       const wrapper = shallowMount(App)
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       const todos = [
         {
@@ -141,7 +141,7 @@ describe('App.vue', () => {
       wrapper.find('#todo-input').setValue(todos[0].value)
       await wrapper.find('#add-todo-button').trigger('click')
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       expect(wrapper.vm.todoList[0].id).toBe(todos[0].id)
       expect(wrapper.vm.todoList[0].value).toBe(todos[0].value)
@@ -149,12 +149,12 @@ describe('App.vue', () => {
       expect(wrapper.vm.todoInput).toBe('')
 
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       wrapper.find('#todo-input').setValue(todos[1].value)
       await wrapper.find('#add-todo-button').trigger('click')
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       expect(wrapper.vm.todoList[1].id).toBe(todos[1].id)
       expect(wrapper.vm.todoList[1].value).toBe(todos[1].value)
@@ -162,11 +162,11 @@ describe('App.vue', () => {
       expect(wrapper.vm.todoInput).toBe('')
 
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       wrapper.find('#delete-todo-' + todos[0].id).trigger('click')
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       expect(wrapper.vm.todoList.length).toBe(1)
       expect(wrapper.vm.todoList[0].id).toBe(todos[1].id)
@@ -176,11 +176,11 @@ describe('App.vue', () => {
     it('clear todo list', async () => {
       const wrapper = shallowMount(App)
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
 
       await wrapper.find('#deleteAllButton').trigger('click')
       wrapper.vm.$nextTick()
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 500))
       expect(wrapper.vm.todoList.length).toBe(0)
 
     })

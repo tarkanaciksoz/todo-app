@@ -1,11 +1,10 @@
-import axios from 'axios'
-import adapter from "axios/lib/adapters/http";
+import fetch from "node-fetch"
 
-axios.defaults.adapter = adapter;
 export class API {
     constructor (url) {
         if (url === undefined || url === "") {
-            url = "http://localhost:9090"
+            url = "http://todo-app.localhost:9090"
+            //url = "http://backend:9090"
         }
         
         this.url = url
@@ -23,58 +22,79 @@ export class API {
     async getTodosRequest() {
         const request = {
             method: 'GET',
-            url: this.completeUrl('/todo/getTodos'),
             headers: this.getHeaders(),
         }
-
-        return axios(request).then(r => r.data)
+        
+        return fetch(this.completeUrl('/todo/getTodos'), request)
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            return data
+        })
     }
 
     async createTodoRequest(todo) {
         const request = {
             method: 'POST',
-            url: this.completeUrl('/todo/createTodo'),
-            data: JSON.stringify({
+            body: JSON.stringify({
                 id: todo.id,
                 value: todo.value
             }),
-            headers: this.getHeaders(),
         }
 
-        return axios(request).then(r => r.data)
+        return fetch(this.completeUrl('/todo/createTodo'), request)
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            return data
+        })
     }
 
     async markTodoRequest(todo) {
         const request = {
             method: 'POST',
-            url: this.completeUrl('/todo/markTodo/' + todo.id),
-            headers: this.getHeaders(),
-            
+            headers: this.getHeaders(),   
         }
 
-        return axios(request).then(r => r.data)
+        return fetch(this.completeUrl('/todo/markTodo/' + todo.id), request)
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            return data
+        })
     }
 
     async deleteTodoRequest(todo) {
         const request = {
             method: 'GET',
-            url: this.completeUrl('/todo/deleteTodo/' + todo.id),
             headers: this.getHeaders(),
-            
         }
 
-        return axios(request).then(r => r.data)
+        return fetch(this.completeUrl('/todo/deleteTodo/' + todo.id), request)
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            return data
+        })
     }
 
     async deleteAllTodosRequest() {
         const request = {
             method: 'GET',
-            url: this.completeUrl('/todo/deleteAllTodos'),
-            headers: this.getHeaders(),
-            
+            headers: this.getHeaders(),   
         }
 
-        return axios(request).then(r => r.data)
+        return fetch(this.completeUrl('/todo/deleteAllTodos'), request)
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            return data
+        })
     }
 }
 
