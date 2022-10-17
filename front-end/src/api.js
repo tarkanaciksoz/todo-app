@@ -3,7 +3,7 @@ import fetch from "node-fetch"
 export class API {
     constructor (url) {
         if (url === undefined || url === "") {
-            url = "http://ec2-3-83-207-93.compute-1.amazonaws.com:9090"
+            url = process.env.API_URL
             //url = "http://backend:9090"
         }
         
@@ -98,4 +98,4 @@ export class API {
     }
 }
 
-export default new API()
+export default new API(process.env.API_URL)
