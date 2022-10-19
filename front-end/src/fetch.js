@@ -2,7 +2,6 @@ import fetch from "node-fetch"
 
 export class FETCH {
     constructor (url) {
-        console.log(process.env.VUE_APP_API_URL)
         if (url === undefined || url === "") {
             url = "http://todo-app.localhost:9090"
             //url = "http://backend:9090"

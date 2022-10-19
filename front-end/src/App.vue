@@ -4,7 +4,7 @@
     <div class="form-group">
       <input type="text" id="todo-input" name="todo-input" v-model="todoInput" placeholder="Give Todo..."/>
       <button class="add-button" id="add-todo-button" @click="addTodo">ADD</button>
-      <button class="delete-button" id="deleteAllButton" @click="deleteAll">DELETE ALL</button>
+      <button v-if="todoList.length > 0" class="delete-button" id="deleteAllButton" @click="deleteAll">DELETE ALL</button>
     </div>
     <div class="todo-list-container">
       <div class="todo-list-head">
