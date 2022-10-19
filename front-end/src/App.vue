@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import API from '@/api'
+import AXIOS from '@/axios'
 
 export default {
   name: 'App',
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     getTodos: async function () {
-      const todoListResponse = await API.getTodosRequest()
+      const todoListResponse = await AXIOS.getTodosRequest()
       if (todoListResponse.success) {
         this.todoList = todoListResponse.data
       }
@@ -69,7 +69,7 @@ export default {
         return
       }
 
-      const createTodoResponse = await API.createTodoRequest({
+      const createTodoResponse = await AXIOS.createTodoRequest({
         id: this.todoList.length + 1,
         value: this.todoInput,
         marked: 0
@@ -85,13 +85,13 @@ export default {
       const todoIndex = this.todoList.map(todo => todo.id).indexOf(todoId)
       const todo = this.todoList[todoIndex]
 
-      const deleteTodoResponse = await API.deleteTodoRequest(todo)
+      const deleteTodoResponse = await AXIOS.deleteTodoRequest(todo)
       if(deleteTodoResponse.success) {
         this.todoList.splice(todoIndex, 1)
       }
     },
     deleteAll: async function () {
-      const deleteTodoResponse = await API.deleteAllTodosRequest()
+      const deleteTodoResponse = await AXIOS.deleteAllTodosRequest()
       if(deleteTodoResponse.success) {
         this.todoList = []
       }
@@ -104,7 +104,7 @@ export default {
         todo.marked = 1
       }
 
-      const todoMarkResponse = await API.markTodoRequest(todo)
+      const todoMarkResponse = await AXIOS.markTodoRequest(todo)
       if (todoMarkResponse.success) {
         this.todoList[todoIndex] = todo
       }

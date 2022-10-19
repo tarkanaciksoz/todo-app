@@ -2,8 +2,10 @@
 echo "`/sbin/ip route|awk '/default/ { print $3 }'` todo-app.localhost" >> /etc/hosts
 
 cd app/ && npm run test:unit
-find . ! -name dist -maxdepth 1 -type f -delete
-find . ! -name dist -maxdepth 1 -type d -delete
-rm -rf docker node_modules public src tests
-mv ./dist/* ./ && rm -rf ./dist
+mv ./dist ../dist
+cd .. && rm -Rf app/
+mv dist app
+#mv dist ../ && cd .. && rm -rf app
+#mkdir app/ && cp -R dist/ app/ && rm -rf dist/
+#mv dist app
 nginx -g "daemon off;"

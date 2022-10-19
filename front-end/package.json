@@ -7,9 +7,9 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "build-dev": "vue-cli-service build --mode dev",
+    "build-dev": "vue-cli-service build --mode development",
     "build-test": "vue-cli-service build --mode test",
-    "build-prod": "vue-cli-service build --mode prod"
+    "build-prod": "vue-cli-service build --mode production"
   },
   "dependencies": {
     "@vue/cli-service": "^5.0.8",

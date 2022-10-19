@@ -4,10 +4,8 @@ import adapter from "axios/lib/adapters/http";
 axios.defaults.adapter = adapter;
 export class AXIOS {
     constructor (url) {
-        console.log(process.env.VUE_APP_API_URL)
         if (url === undefined || url === "") {
-            url = "http://todo-app.localhost:9090"
-            //url = "http://backend:9090"
+            url = process.env.VUE_APP_API_URL
         }
         
         this.url = url
@@ -19,7 +17,6 @@ export class AXIOS {
 
     getHeaders() {
         return {
-            "Content-type": "application/json; charset=UTF-8"
         }
     }
 
@@ -49,7 +46,6 @@ export class AXIOS {
         const request = {
             method: 'POST',
             url: this.completeUrl('/todo/markTodo/' + todo.id),
-
         }
 
         return axios(request).then(r => r.data)
@@ -57,11 +53,8 @@ export class AXIOS {
 
     async deleteTodoRequest(todo) {
         const request = {
-            method: 'DELETE',
+            method: 'POST',
             url: this.completeUrl('/todo/deleteTodo/' + todo.id),
-            headers: {
-                crossDomain: true
-            },
         }
 
         return axios(request).then(r => r.data)
@@ -69,15 +62,12 @@ export class AXIOS {
 
     async deleteAllTodosRequest() {
         const request = {
-            method: 'DELETE',
+            method: 'POST',
             url: this.completeUrl('/todo/deleteAllTodos'),
-            headers: {
-                crossDomain: true,
-            },
         }
 
         return axios(request).then(r => r.data)
     }
 }
 
-export default new AXIOS()
+export default new AXIOS(process.env.VUE_APP_API_URL)

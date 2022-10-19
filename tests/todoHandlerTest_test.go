@@ -191,7 +191,7 @@ func getTests() Tests {
 		//		EMPTY LIST
 		Test{
 			TestName:             "DELETE ALL TODOS-1",
-			TestRequest:          Request{"GET", "/todo/deleteAllTodos", ""},
+			TestRequest:          Request{"POST", "/todo/deleteAllTodos", ""},
 			ExpectedTestResponse: helpers.SetAndGetResponse(true, "All todos successfully deleted", nil, http.StatusOK),
 			ExpectedTestError:    nil,
 		},
@@ -221,7 +221,7 @@ func getTests() Tests {
 		},
 		Test{
 			TestName:             "DELETE TODO-1",
-			TestRequest:          Request{"GET", "/todo/deleteTodo/1", ""},
+			TestRequest:          Request{"POST", "/todo/deleteTodo/1", ""},
 			ExpectedTestResponse: helpers.SetAndGetResponse(true, "Todo with id:1 successfully deleted", nil, http.StatusOK),
 			ExpectedTestError:    nil,
 		},
@@ -236,7 +236,7 @@ func getTests() Tests {
 		//		EMPTY LIST
 		Test{
 			TestName:             "DELETE ALL TODOS-2",
-			TestRequest:          Request{"GET", "/todo/deleteAllTodos", ""},
+			TestRequest:          Request{"POST", "/todo/deleteAllTodos", ""},
 			ExpectedTestResponse: helpers.SetAndGetResponse(true, "All todos successfully deleted", nil, http.StatusOK),
 			ExpectedTestError:    nil,
 		},
@@ -280,7 +280,7 @@ func getTests() Tests {
 		},
 		Test{
 			TestName:             "DELETE TODO-2",
-			TestRequest:          Request{"GET", "/todo/deleteTodo/1", ""},
+			TestRequest:          Request{"POST", "/todo/deleteTodo/1", ""},
 			ExpectedTestResponse: helpers.SetAndGetResponse(true, "Todo with id:1 successfully deleted", nil, http.StatusOK),
 			ExpectedTestError:    nil,
 		},
@@ -301,7 +301,7 @@ func getTests() Tests {
 		//		EMPTY LIST
 		Test{
 			TestName:             "DELETE ALL TODOS-2",
-			TestRequest:          Request{"GET", "/todo/deleteAllTodos", ""},
+			TestRequest:          Request{"POST", "/todo/deleteAllTodos", ""},
 			ExpectedTestResponse: helpers.SetAndGetResponse(true, "All todos successfully deleted", nil, http.StatusOK),
 			ExpectedTestError:    nil,
 		},

@@ -24,8 +24,10 @@ func MethodNotAllowedHandler() http.Handler {
 
 func Middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
-		rw.Header().Set("Content-type", "application/json; charset=UTF-8")
+		rw.Header().Set("Content-Type", "application/json")
 		rw.Header().Set("Access-Control-Allow-Origin", "*")
+		rw.Header().Set("Access-Control-Allow-Headers", "*")
+		rw.Header().Set("Access-Control-Allow-Credentials", "true")
 
 		ctx := r.Context()
 		r = r.WithContext(ctx)

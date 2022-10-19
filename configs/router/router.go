@@ -22,25 +22,12 @@ func Init(logger *log.Logger, DB *gorm.DB) *mux.Router {
 	uHandler := handlers.NewTodoHandler(logger, DB)
 
 	mappedRoutes := make(map[string]Routes)
-
 	mappedRoutes[http.MethodGet] = Routes{
 		Route{
 			Name:        "GET TODO LIST",
 			Method:      http.MethodGet,
 			Pattern:     "/todo/getTodos",
 			HandlerFunc: uHandler.GetTodos,
-		},
-		Route{
-			Name:        "DELETE ALL TODOS",
-			Method:      http.MethodGet,
-			Pattern:     "/todo/deleteAllTodos",
-			HandlerFunc: uHandler.DeleteAllTodos,
-		},
-		Route{
-			Name:        "DELETE TODO",
-			Method:      http.MethodGet,
-			Pattern:     "/todo/deleteTodo/{id:[0-9]+}",
-			HandlerFunc: uHandler.DeleteTodo,
 		},
 	}
 
@@ -57,9 +44,25 @@ func Init(logger *log.Logger, DB *gorm.DB) *mux.Router {
 			Pattern:     "/todo/markTodo/{id:[0-9]+}",
 			HandlerFunc: uHandler.MarkTodo,
 		},
+		Route{
+			Name:        "DELETE ALL TODOS",
+			Method:      http.MethodPost,
+			Pattern:     "/todo/deleteAllTodos",
+			HandlerFunc: uHandler.DeleteAllTodos,
+		},
+		Route{
+			Name:        "DELETE TODO",
+			Method:      http.MethodPost,
+			Pattern:     "/todo/deleteTodo/{id:[0-9]+}",
+			HandlerFunc: uHandler.DeleteTodo,
+		},
 	}
 
-	/*mappedRoutes[http.MethodDelete] = Routes{
+	/*mappedRoutes[http.MethodPut] = Routes{
+
+	}
+
+	mappedRoutes[http.MethodDelete] = Routes{
 
 	}*/
 

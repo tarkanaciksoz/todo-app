@@ -1,9 +1,10 @@
 import fetch from "node-fetch"
 
-export class API {
+export class FETCH {
     constructor (url) {
+        console.log(process.env.VUE_APP_API_URL)
         if (url === undefined || url === "") {
-            url = process.env.VUE_APP_API_URL
+            url = "http://todo-app.localhost:9090"
             //url = "http://backend:9090"
         }
         
@@ -16,13 +17,13 @@ export class API {
 
     getHeaders() {
         return {
+            "Content-type": "application/json; charset=UTF-8"
         }
     }
 
     async getTodosRequest() {
         const request = {
             method: 'GET',
-            headers: this.getHeaders(),
         }
         
         return fetch(this.completeUrl('/todo/getTodos'), request)
@@ -55,7 +56,6 @@ export class API {
     async markTodoRequest(todo) {
         const request = {
             method: 'POST',
-            headers: this.getHeaders(),   
         }
 
         return fetch(this.completeUrl('/todo/markTodo/' + todo.id), request)
@@ -69,8 +69,7 @@ export class API {
 
     async deleteTodoRequest(todo) {
         const request = {
-            method: 'GET',
-            headers: this.getHeaders(),
+            method: 'DELETE',
         }
 
         return fetch(this.completeUrl('/todo/deleteTodo/' + todo.id), request)
@@ -84,8 +83,7 @@ export class API {
 
     async deleteAllTodosRequest() {
         const request = {
-            method: 'GET',
-            headers: this.getHeaders(),   
+            method: 'DELETE',
         }
 
         return fetch(this.completeUrl('/todo/deleteAllTodos'), request)
@@ -98,4 +96,4 @@ export class API {
     }
 }
 
-export default new API(process.env.VUE_APP_API_URL)
+export default new FETCH()
