@@ -13,8 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Docker Compose down
+        run: docker-compose down
+
       - name: Docker system prune
         run: docker system prune -f
-
-      - name: Docker Compose down
-        run: ls
+        
+      - name: Docker Compose build and up
+        run: docker-compose --env-file ./.env.test up --build -d
