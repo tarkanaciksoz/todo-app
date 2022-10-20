@@ -16,10 +16,10 @@ jobs:
       - uses: actions/checkout@v2
     
       - name: Docker Compose down
-        run: docker-compose -f docker-compose.yaml down
+        run: make destroy
 
       - name: Docker system prune
         run: docker system prune -f
         
       - name: Docker Compose build and up
-        run: docker-compose -f docker-compose.yaml --env-file ./.env.test up --build -d
+        run: make build-test
