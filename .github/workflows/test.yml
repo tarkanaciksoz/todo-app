@@ -99,11 +99,11 @@ jobs:
       id: go
 
     - name: set up node/npm
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-        id: npm
+      uses: actions/checkout@v3
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+      id: npm
 
     - name: Checkout to app dir
       uses: actions/checkout@v2
