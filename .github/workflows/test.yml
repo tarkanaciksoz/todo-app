@@ -1,0 +1,23 @@
+
+name: Deploy To Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    name: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Docker system prune
+        run: docker system prune -f
+
+      - name: Docker Compose down
+        run: docker-compose down
+
+      - name: Docker Compose build and up
+        run: docker-compose --env-file ./.env.test up --build -d
