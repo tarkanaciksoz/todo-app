@@ -13,11 +13,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+    
       - name: Docker Compose down
-        run: docker-compose down
+        run: docker-compose -f docker-compose.yaml down
 
       - name: Docker system prune
         run: docker system prune -f
         
       - name: Docker Compose build and up
-        run: docker-compose --env-file ./.env.test up --build -d
+        run: docker-compose -f docker-compose.yaml --env-file ./.env.test up --build -d
