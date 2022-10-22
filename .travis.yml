@@ -4,12 +4,24 @@ services:
   - docker
 
 before_install:
-  - docker-compose --env-file ./.env.test build
+  - docker-compose --env-file ./.env.prod build
 
 script:
-  - docker-compose --env-file ./.env.test run --rm -e CGO_ENABLED=0 -e APP_ENV=test backend go test -v --tags test ./...
+  - docker-compose --env-file ./.env.prod run --rm -e CGO_ENABLED=0 -e APP_ENV=prod backend go test -v --tags prod ./...
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push tarkanaciksoz/todo-app-backend
   - docker push tarkanaciksoz/todo-app-frontend
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: todo-app
+  env: Todoapp-env
+  bucket_name: elasticbeanstalk-us-east-1-496965460335
+  bucket_path: todo-app
+  on: 
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY

@@ -1,0 +1,114 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+            "name": "frontend",
+            "ContainerName": "todo-app-frontend",
+            "image": "tarkanaciksoz/todo-app-frontend:latest",
+            "essential": false,
+            "environment": [
+                {
+                    "name": "ENV",
+                    "value": "${APP_ENV}"
+                }
+            ],
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80
+                }
+            ],
+            "links": [
+                "backend"
+            ]
+        },
+        {
+            "name": "backend",
+            "ContainerName": "todo-app-backend",
+            "image": "tarkanaciksoz/todo-app-backend:latest",
+            "essential": true,
+            "environment": [
+                {
+                    "name": "ENV",
+                    "value": "${APP_ENV}"
+                },
+                {
+                    "name": "WAIT_HOSTS",
+                    "value": "mysql:3306"
+                },
+                {
+                    "name": "WAIT_HOSTS_TIMEOUT",
+                    "value": "300"
+                },
+                {
+                    "name": "WAIT_SLEEP_INTERVAL",
+                    "value": "30"
+                },
+                {
+                    "name": "WAIT_HOST_CONNECT_TIMEOUT",
+                    "value": "30"
+                },
+                {
+                    "name": "MYSQL_ROOT_PASSWORD",
+                    "value": "${DB_PASSWORD}"
+                },
+                {
+                    "name": "MYSQL_DATABASE",
+                    "value": "${DB_NAME}"
+                },
+                {
+                    "name": "MYSQL_USER",
+                    "value": "${DB_USERNAME}"
+                },
+                {
+                    "name": "MYSQL_PASSWORD",
+                    "value": "${DB_PASSWORD}"
+                }
+            ],
+            "portMappings": [
+                {
+                    "containerPort": 9090,
+                    "hostPort": 9090
+                }
+            ],
+            "links": [
+                "mysql"
+            ]
+        },
+        {
+            "name": "mysql",
+            "ContainerName": "todo-app-mysql",
+            "image": "mysql:latest",
+            "essential": true,
+            "command": [
+                "--default-authentication-plugin=mysql_native_password"
+            ],
+            "environment": [
+                {
+                    "name": "MYSQL_ROOT_PASSWORD",
+                    "value": "${DB_PASSWORD}"
+                },
+                {
+                    "name": "MYSQL_DATABASE",
+                    "value": "${DB_NAME}"
+                },
+                {
+                    "name": "MYSQL_PASSWORD",
+                    "value": "${DB_PASSWORD}"
+                }
+            ],
+            "portMappings": [
+                {
+                    "containerPort": 3306,
+                    "hostPort": 3306
+                }
+            ],
+            "mountPoints": [
+                {
+                  "sourceVolume": "./docker/create-local-db",
+                  "containerPath": "/docker-entrypoint-initdb.d"
+                }
+            ]
+        }
+    ]
+}
