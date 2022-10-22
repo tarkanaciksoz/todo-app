@@ -2,85 +2,20 @@
     "AWSEBDockerrunVersion": 2,
     "containerDefinitions": [
         {
-            "name": "backend",
-            "ContainerName": "todo-app-backend",
-            "image": "tarkanaciksoz/todo-app-backend",
+            "name": "frontend",
+            "ContainerName": "todo-app-frontend",
+            "image": "tarkanaciksoz/todo-app-frontend:latest",
             "essential": false,
             "environment": [
                 {
                     "name": "ENV",
-                    "value": "test"
-                },
-                {
-                    "name": "WAIT_HOSTS",
-                    "value": "mysql:3306"
-                },
-                {
-                    "name": "WAIT_HOSTS_TIMEOUT",
-                    "value": "300"
-                },
-                {
-                    "name": "WAIT_SLEEP_INTERVAL",
-                    "value": "30"
-                },
-                {
-                    "name": "WAIT_HOST_CONNECT_TIMEOUT",
-                    "value": "30"
-                },
-                {
-                    "name": "MYSQL_ROOT_PASSWORD",
-                    "value": "Trkn-1910"
-                },
-                {
-                    "name": "MYSQL_DATABASE",
-                    "value": "todo-app"
-                },
-                {
-                    "name": "MYSQL_USER",
-                    "value": "root"
-                },
-                {
-                    "name": "MYSQL_PASSWORD",
-                    "value": "Trkn-1910"
+                    "value": "prod"
                 }
             ],
             "portMappings": [
                 {
-                    "containerPort": 9090,
-                    "hostPort": 9090
-                }
-            ],
-            "links": [
-                "mysql"
-            ],
-            "memory": 500
-        },
-        {
-            "name": "mysql",
-            "ContainerName": "todo-app-mysql",
-            "image": "mysql:latest",
-            "essential": true,
-            "command": [
-                "--default-authentication-plugin=mysql_native_password"
-            ],
-            "environment": [
-                {
-                    "name": "MYSQL_ROOT_PASSWORD",
-                    "value": "Trkn-1910"
-                },
-                {
-                    "name": "MYSQL_DATABASE",
-                    "value": "todo-app"
-                },
-                {
-                    "name": "MYSQL_PASSWORD",
-                    "value": "Trkn-1910"
-                }
-            ],
-            "portMappings": [
-                {
-                    "containerPort": 3306,
-                    "hostPort": 3306
+                    "containerPort": 80,
+                    "hostPort": 80
                 }
             ],
             "memory": 500

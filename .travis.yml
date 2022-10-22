@@ -4,18 +4,17 @@ services:
   - docker
 
 before_install:
-  - docker-compose --env-file ./.env.test build mysql
-  - docker-compose --env-file ./.env.test build backend
+  - docker-compose --env-file ./.env.test build frontend
 
 script:
-  - docker-compose --env-file ./.env.test up -d mysql
-  - sleep 10
-  - docker-compose --env-file ./.env.test run --rm -e CGO_ENABLED=0 -e APP_ENV=test backend go test -v --tags test ./...
+  #- docker-compose --env-file ./.env.test up -d mysql
+  - sleep 5
+  #- docker-compose --env-file ./.env.test run --rm -e CGO_ENABLED=0 -e APP_ENV=test backend go test -v --tags test ./...
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push tarkanaciksoz/todo-app-backend
-#  - docker push tarkanaciksoz/todo-app-frontend
+#  - docker push tarkanaciksoz/todo-app-backend
+  - docker push tarkanaciksoz/todo-app-frontend
 
 deploy:
   provider: elasticbeanstalk
