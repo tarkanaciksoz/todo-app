@@ -5,7 +5,7 @@
             "name": "frontend",
             "ContainerName": "todo-app-frontend",
             "image": "tarkanaciksoz/todo-app-frontend:latest",
-            "essential": false,
+            "essential": true,
             "environment": [
                 {
                     "name": "ENV",
