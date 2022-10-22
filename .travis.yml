@@ -6,9 +6,6 @@ services:
 before_install:
   - docker-compose --env-file ./.env.prod build
 
-script:
-  - APP_ENV=prod go test -v --tags prod ./...
-
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push tarkanaciksoz/todo-app-backend
