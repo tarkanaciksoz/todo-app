@@ -24,5 +24,5 @@ COPY --from=build-stage /app/nginx-$ENV.conf /etc/nginx/nginx.conf
 #RUN chmod +x /app/test-and-build.sh
 RUN apk update && apk add --update npm
 EXPOSE 80
-CMD sh docker/./wait-for.sh backend:9090 --timeout=30 -- sh docker/./test-and-build.sh $ENV
+CMD sh docker/./wait-for.sh backend:9090 --timeout=30 -- sh nginx -g "daemon off;"
 #CMD sh app/./wait-for.sh backend:9090 --timeout=30 -- sh app/./test-and-build.sh $ENV
