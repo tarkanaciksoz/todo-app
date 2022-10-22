@@ -7,7 +7,7 @@ before_install:
   - docker-compose --env-file ./.env.prod build
 
 script:
-  #- docker-compose --env-file ./.env.test run --rm -e CGO_ENABLED=0 -e APP_ENV=test backend go test -v --tags test ./...
+  - APP_ENV=prod go test -v --tags prod ./...
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
@@ -24,4 +24,4 @@ deploy:
   on: 
     branch: master
   access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+  secret_access_key: $AWS_SECRET_KEY 
