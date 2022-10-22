@@ -2,6 +2,7 @@ version: '3.9'
 services:
   frontend:
     container_name: todo-app-frontend
+    image: tarkanaciksoz/todo-app-frontend:latest
     build:
       context: ./front-end/
       args:
@@ -26,6 +27,7 @@ services:
 
   backend:
     container_name: todo-app-backend
+    image: tarkanaciksoz/todo-app-backend:latest
     build:
       context: .
       args:
