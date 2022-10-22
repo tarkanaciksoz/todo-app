@@ -105,12 +105,6 @@
                     "hostPort": 3306
                 }
             ],
-            "mountPoints": [
-                {
-                  "sourceVolume": "./docker/create-local-db",
-                  "containerPath": "/docker-entrypoint-initdb.d"
-                }
-            ],
             "memory": 500
         }
     ]
