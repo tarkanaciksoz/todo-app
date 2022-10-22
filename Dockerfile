@@ -9,9 +9,9 @@ COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 
-RUN chmod +x docker/wait-for.sh
-RUN chmod +x docker/test-and-build.sh
+RUN CGO_ENABLED=0 GOOS=linux go build --tags $ENV -o main main.go
 
+FROM scratch
+COPY --from=builder /app/main .
 EXPOSE 9090
-
-CMD docker/./wait-for.sh mysql:3306 --timeout=30 -- docker/./test-and-build.sh $ENV
+CMD ["./main"]
