@@ -18,7 +18,97 @@
                     "hostPort": 80
                 }
             ],
-            "memory": 500
+            "memory": 500,
+            "links": [
+                "backend"
+            ]
+        },
+        {
+            "name": "backend",
+            "ContainerName": "todo-app-backend",
+            "image": "tarkanaciksoz/todo-app-backend:latest",
+            "essential": true,
+            "environment": [
+                {
+                    "name": "ENV",
+                    "value": "prod"
+                },
+                {
+                    "name": "WAIT_HOSTS",
+                    "value": "mysql:3306"
+                },
+                {
+                    "name": "WAIT_HOSTS_TIMEOUT",
+                    "value": 300
+                },
+                {
+                    "name": "WAIT_SLEEP_INTERVAL",
+                    "value": 30
+                },
+                {
+                    "name": "WAIT_HOST_CONNECT_TIMEOUT",
+                    "value": 30
+                },
+                {
+                    "name": "MYSQL_ROOT_PASSWORD",
+                    "value": "Trkn-1910"
+                },
+                {
+                    "name": "MYSQL_DATABASE",
+                    "value": "todo-app"
+                },
+                {
+                    "name": "MYSQL_USER",
+                    "value": "root"
+                },
+                {
+                    "name": "MYSQL_PASSWORD",
+                    "value": "Trkn-1910"
+                }
+            ],
+            "portMappings": [
+                {
+                    "containerPort": 9090,
+                    "hostPort": 9090
+                }
+            ],
+            "memory": 500,
+            "links": [
+                "mysql"
+            ]
+        },
+        {
+            "name": "mysql",
+            "ContainerName": "todo-app-mysql",
+            "image": "mysql",
+            "essential": true,
+            "environment": [
+                {
+                    "name": "MYSQL_ROOT_PASSWORD",
+                    "value": "Trkn-1910"
+                },
+                {
+                    "name": "MYSQL_DATABASE",
+                    "value": "todo-app"
+                },
+                {
+                    "name": "MYSQL_PASSWORD",
+                    "value": "Trkn-1910"
+                }
+            ],
+            "portMappings": [
+                {
+                    "containerPort": 3306,
+                    "hostPort": 3306
+                }
+            ],
+            "memory": 500,
+            "mountPoints": [
+                {
+                    "containerPath": "/docker-entrypoint-initdb.d",
+                    "sourceVolume": "./docker/create-local-db"
+                }
+            ],
         }
     ]
 }

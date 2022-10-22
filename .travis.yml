@@ -4,16 +4,16 @@ services:
   - docker
 
 before_install:
-  - docker-compose --env-file ./.env.prod build frontend
+  - docker-compose --env-file ./.env.prod build
 
 script:
-  #- docker-compose --env-file ./.env.test up -d mysql
-  - sleep 5
-  #- docker-compose --env-file ./.env.test run --rm -e CGO_ENABLED=0 -e APP_ENV=test backend go test -v --tags test ./...
+  - docker-compose --env-file ./.env.prod up -d mysql
+  - sleep 15
+  - docker-compose --env-file ./.env.prod run --rm -e CGO_ENABLED=0 -e APP_ENV=prod backend go test -v --tags prod ./...
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-#  - docker push tarkanaciksoz/todo-app-backend
+  - docker push tarkanaciksoz/todo-app-backend
   - docker push tarkanaciksoz/todo-app-frontend
 
 deploy:
