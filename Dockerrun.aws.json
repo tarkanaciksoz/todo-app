@@ -108,7 +108,7 @@
                     "containerPath": "/docker-entrypoint-initdb.d",
                     "sourceVolume": "./docker/create-local-db"
                 }
-            ],
+            ]
         }
     ]
 }
