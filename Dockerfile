@@ -1,4 +1,4 @@
-FROM golang:alpine AS Builder
+FROM golang:alpine
 ARG ENV
 WORKDIR /app
 
@@ -9,11 +9,9 @@ COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 
-RUN CGO_ENABLED=0 go build --tags $ENV -o main main.go
-#RUN CGO_ENABLED=0 APP_ENV=$1 go test --tags $1 ./...
-#RUN CGO_ENABLED=0 GOOS=linux go build --tags $1 -o main main.go
+RUN chmod +x docker/wait-for.sh
+RUN chmod +x docker/test-and-build.sh
 
-FROM scratch
-COPY --from=builder /app/main .
 EXPOSE 9090
-CMD ["APP_ENV=$ENV ./main"]
+
+CMD docker/./wait-for.sh mysql:3306 --timeout=30 -- APP_ENV=$1 ./main

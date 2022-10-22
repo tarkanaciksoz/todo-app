@@ -27,7 +27,7 @@
             "name": "backend",
             "ContainerName": "todo-app-backend",
             "image": "tarkanaciksoz/todo-app-backend:latest",
-            "essential": true,
+            "essential": false,
             "environment": [
                 {
                     "name": "ENV",
