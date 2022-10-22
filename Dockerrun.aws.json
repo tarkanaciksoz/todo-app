@@ -2,31 +2,9 @@
     "AWSEBDockerrunVersion": 2,
     "containerDefinitions": [
         {
-            "name": "frontend",
-            "ContainerName": "todo-app-frontend",
-            "image": "tarkanaciksoz/todo-app-frontend:latest",
-            "essential": false,
-            "environment": [
-                {
-                    "name": "ENV",
-                    "value": "${APP_ENV}"
-                }
-            ],
-            "portMappings": [
-                {
-                    "containerPort": 80,
-                    "hostPort": 80
-                }
-            ],
-            "links": [
-                "backend"
-            ],
-            "memory": 500
-        },
-        {
             "name": "backend",
             "ContainerName": "todo-app-backend",
-            "image": "tarkanaciksoz/todo-app-backend:latest",
+            "image": "tarkanaciksoz/todo-app-backend",
             "essential": false,
             "environment": [
                 {
