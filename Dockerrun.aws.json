@@ -9,7 +9,7 @@
             "environment": [
                 {
                     "name": "ENV",
-                    "value": "${APP_ENV}"
+                    "value": "test"
                 },
                 {
                     "name": "WAIT_HOSTS",
@@ -29,19 +29,19 @@
                 },
                 {
                     "name": "MYSQL_ROOT_PASSWORD",
-                    "value": "${DB_PASSWORD}"
+                    "value": "Trkn-1910"
                 },
                 {
                     "name": "MYSQL_DATABASE",
-                    "value": "${DB_NAME}"
+                    "value": "todo-app"
                 },
                 {
                     "name": "MYSQL_USER",
-                    "value": "${DB_USERNAME}"
+                    "value": "root"
                 },
                 {
                     "name": "MYSQL_PASSWORD",
-                    "value": "${DB_PASSWORD}"
+                    "value": "Trkn-1910"
                 }
             ],
             "portMappings": [
@@ -66,15 +66,15 @@
             "environment": [
                 {
                     "name": "MYSQL_ROOT_PASSWORD",
-                    "value": "${DB_PASSWORD}"
+                    "value": "Trkn-1910"
                 },
                 {
                     "name": "MYSQL_DATABASE",
-                    "value": "${DB_NAME}"
+                    "value": "todo-app"
                 },
                 {
                     "name": "MYSQL_PASSWORD",
-                    "value": "${DB_PASSWORD}"
+                    "value": "Trkn-1910"
                 }
             ],
             "portMappings": [
