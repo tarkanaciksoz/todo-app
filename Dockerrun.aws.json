@@ -20,7 +20,8 @@
             ],
             "links": [
                 "backend"
-            ]
+            ],
+            "memory": 500
         },
         {
             "name": "backend",
@@ -73,7 +74,8 @@
             ],
             "links": [
                 "mysql"
-            ]
+            ],
+            "memory": 500
         },
         {
             "name": "mysql",
@@ -108,7 +110,8 @@
                   "sourceVolume": "./docker/create-local-db",
                   "containerPath": "/docker-entrypoint-initdb.d"
                 }
-            ]
+            ],
+            "memory": 500
         }
     ]
 }
