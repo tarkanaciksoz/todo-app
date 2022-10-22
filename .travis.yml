@@ -8,7 +8,6 @@ before_install:
 
 script:
   - docker-compose --env-file ./.env.test run --rm -e CGO_ENABLED=0 -e APP_ENV=test backend go test -v --tags test ./...
-#  - docker-compose --env-file ./.env.test run --rm frontend npm run test:unit --prefix app/
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
