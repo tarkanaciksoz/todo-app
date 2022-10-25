@@ -49,6 +49,12 @@
                     "value": "backend"
                 }
             ],
+            "portMappings": [
+                {
+                    "containerPort": 9090,
+                    "hostPort": 9090
+                }
+            ],
             "memory": 128
         }
     ]
