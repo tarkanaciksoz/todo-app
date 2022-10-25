@@ -1,6 +1,21 @@
 version: '3.9'
 
 services:
+  mysql:
+    container_name: 'todo-app-mysql'
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./create-local-db:/docker-entrypoint-initdb.d
+    networks:
+      - todo-app
+    ports:
+      - 3306:3306
+
   backend:
     container_name: 'todo-app-backend'
     image: 'tarkanaciksoz/todo-app-backend:latest'

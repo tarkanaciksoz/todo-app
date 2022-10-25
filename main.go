@@ -9,7 +9,8 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
-	"github.com/tarkanaciksoz/todo-list/router"
+	"github.com/tarkanaciksoz/todo-list/configs/database"
+	"github.com/tarkanaciksoz/todo-list/configs/router"
 )
 
 func main() {
@@ -27,9 +28,15 @@ func main() {
 	}
 	var bindAddress = os.Getenv("BIND_ADDRESS")
 
+	DB, err := database.Init()
+	if err != nil {
+		logger.Printf("Error starting database connection: %s\n", err.Error())
+		os.Exit(1)
+	}
+
 	s := http.Server{
 		Addr:         bindAddress,
-		Handler:      router.ApplicationRecovery(router.Middleware(router.Init(logger))),
+		Handler:      router.ApplicationRecovery(router.Middleware(router.Init(logger, DB))),
 		ErrorLog:     logger,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
