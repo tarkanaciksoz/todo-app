@@ -6,6 +6,7 @@
             "ContainerName": "todo-app-frontend",
             "image": "tarkanaciksoz/todo-app-frontend:latest",
             "essential": false,
+            "hostname": "frontend",
             "environment": [
                 {
                     "name": "ENV",
@@ -37,6 +38,7 @@
             "ContainerName": "todo-app-backend",
             "image": "tarkanaciksoz/todo-app-backend:latest",
             "essential": true,
+            "hostname": "backend",
             "environment": [
                 {
                     "name": "ENV",
