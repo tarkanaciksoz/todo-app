@@ -37,7 +37,7 @@
             "name": "backend",
             "ContainerName": "todo-app-backend",
             "image": "tarkanaciksoz/todo-app-backend:latest",
-            "essential": true,
+            "essential": false,
             "hostname": "backend",
             "environment": [
                 {
@@ -53,6 +53,38 @@
                 {
                     "containerPort": 9090,
                     "hostPort": 9090
+                }
+            ],
+            "memory": 128
+        },
+        {
+            "name": "mysql",
+            "ContainerName": "todo-app-mysql",
+            "image": "mysql:latest",
+            "essential": true,
+            "hostname": "mysql",
+            "environment": [
+                {
+                    "name": "Container",
+                    "value": "backend"
+                },
+                {
+                    "name": "MYSQL_ROOT_PASSWORD",
+                    "value": "todo-app"
+                },
+                {
+                    "name": "MYSQL_DATABASE",
+                    "value": "todo-app"
+                },
+                {
+                    "name": "MYSQL_PASSWORD",
+                    "value": "todo-app"
+                }
+            ],
+            "portMappings": [
+                {
+                    "containerPort": 3306,
+                    "hostPort": 3306
                 }
             ],
             "memory": 128
