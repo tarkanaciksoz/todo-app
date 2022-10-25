@@ -1,0 +1,26 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker-compose --env-file ./.env.production build
+
+script:
+  - sleep 1
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push tarkanaciksoz/todo-app-frontend
+
+deploy:
+  provider: elasticbeanstalk
+  region: eu-central-1
+  app: todo-app-frontend
+  env: Todoappfrontend-env
+  bucket_name: elasticbeanstalk-eu-central-1-496965460335
+  bucket_path: todo-app-frontend
+  on: 
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY 

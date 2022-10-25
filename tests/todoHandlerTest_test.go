@@ -11,10 +11,9 @@ import (
 	"testing"
 
 	"github.com/joho/godotenv"
-	"github.com/tarkanaciksoz/todo-list/configs/database"
-	"github.com/tarkanaciksoz/todo-list/configs/router"
 	"github.com/tarkanaciksoz/todo-list/helpers"
 	"github.com/tarkanaciksoz/todo-list/models"
+	"github.com/tarkanaciksoz/todo-list/router"
 )
 
 type Test struct {
@@ -46,17 +45,11 @@ func TestTodoHandler(t *testing.T) {
 		os.Exit(1)
 	}
 
-	DB, err := database.Init()
-	if err != nil {
-		logger.Printf("Error starting database connection: %s\n", err.Error())
-		os.Exit(1)
-	}
-
 	for _, test := range getTests() {
 		t.Run(test.TestName, func(t *testing.T) {
 			responseRecorder := httptest.NewRecorder()
 
-			handler := router.ApplicationRecovery(router.Middleware(router.Init(logger, DB)))
+			handler := router.ApplicationRecovery(router.Middleware(router.Init(logger)))
 
 			request, _ := http.NewRequest(test.TestRequest.Method, test.TestRequest.Url, strings.NewReader(test.TestRequest.Body))
 

@@ -7,9 +7,10 @@ before_install:
   - docker-compose --env-file ./.env.prod build
 
 script:
-  - docker-compose --env-file ./.env.prod up -d mysql
-  - sleep 15
   - docker-compose --env-file ./.env.prod run --rm -e CGO_ENABLED=0 -e APP_ENV=prod backend go test -v --tags prod ./...
+  - docker-compose --env-file ./.env.prod up -d backend
+  - docker-compose --env-file ./.env.prod run --rm -w /app frontend npm run test:unit
+  - docker-compose --env-file ./.env.prod up -d frontend
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
@@ -18,10 +19,10 @@ after_success:
 
 deploy:
   provider: elasticbeanstalk
-  region: us-east-1
+  region: eu-central-1
   app: todo-app
   env: Todoapp-env
-  bucket_name: elasticbeanstalk-us-east-1-496965460335
+  bucket_name: elasticbeanstalk-eu-central-1-496965460335
   bucket_path: todo-app
   on: 
     branch: master
