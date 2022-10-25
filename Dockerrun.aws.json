@@ -10,6 +10,10 @@
                 {
                     "name": "ENV",
                     "value": "prod"
+                },
+                {
+                    "name": "Container",
+                    "value": "frontend"
                 }
             ],
             "portMappings": [
@@ -21,6 +25,11 @@
             "memory": 128,
             "links": [
                 "backend"
+            ],
+            "volumesFrom": [
+                {
+                  "sourceContainer": "backend"
+                }
             ]
         },
         {
@@ -32,6 +41,10 @@
                 {
                     "name": "ENV",
                     "value": "prod"
+                },
+                {
+                    "name": "Container",
+                    "value": "backend"
                 }
             ],
             "portMappings": [
