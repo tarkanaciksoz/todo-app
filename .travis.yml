@@ -7,6 +7,8 @@ before_install:
   - docker-compose --env-file ./.env.prod build
 
 script:
+  - docker-compose --env-file ./.env.prod up -d mysql
+  - sleep 12
   - docker-compose --env-file ./.env.prod run --rm -e CGO_ENABLED=0 -e APP_ENV=prod backend go test -v --tags prod ./...
   - docker-compose --env-file ./.env.prod up -d backend
   - docker-compose --env-file ./.env.prod run --rm -w /app frontend npm run test:unit

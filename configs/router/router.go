@@ -6,6 +6,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/tarkanaciksoz/todo-list/handlers"
+	"gorm.io/gorm"
 )
 
 type Route struct {
@@ -17,8 +18,8 @@ type Route struct {
 
 type Routes []Route
 
-func Init(logger *log.Logger) *mux.Router {
-	uHandler := handlers.NewTodoHandler(logger)
+func Init(logger *log.Logger, DB *gorm.DB) *mux.Router {
+	uHandler := handlers.NewTodoHandler(logger, DB)
 
 	mappedRoutes := make(map[string]Routes)
 	mappedRoutes[http.MethodGet] = Routes{
