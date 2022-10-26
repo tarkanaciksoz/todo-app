@@ -9,34 +9,29 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/tarkanaciksoz/todo-list/helpers"
 	"github.com/tarkanaciksoz/todo-list/models"
-	"gorm.io/gorm"
 )
 
 type TodoHandler struct {
-	l  *log.Logger
-	Db *gorm.DB
+	l *log.Logger
 }
 
-func NewTodoHandler(l *log.Logger, db *gorm.DB) *TodoHandler {
-	return &TodoHandler{l, db}
+func NewTodoHandler(l *log.Logger) *TodoHandler {
+	return &TodoHandler{l}
 }
 
 func (uHandler *TodoHandler) GetTodos(rw http.ResponseWriter, _ *http.Request) {
 	uHandler.l.Println("Handle GetTodos method")
 
-	todos, err := models.GetTodos(uHandler.Db)
-	if err != nil {
-		resp := helpers.SetAndGetResponse(false, err.Error(), nil, http.StatusBadRequest)
-		http.Error(rw, resp, http.StatusBadRequest)
-		return
-	}
+	todos := models.GetTodos()
 
-	err = todos.ToJSON(rw, "Todos listed successfully")
+	err := todos.ToJSON(rw, "Todos listed successfully")
 	if err != nil {
+		uHandler.l.Println("Error while handling GetTodos method: " + err.Error())
 		resp := helpers.SetAndGetResponse(false, err.Error(), nil, http.StatusBadRequest)
-		http.Error(rw, resp, http.StatusBadRequest)
+		http.Error(rw, resp, http.StatusOK)
 		return
 	}
+	uHandler.l.Println("GetTodos method successfully handled")
 }
 
 func (uHandler *TodoHandler) AddTodo(rw http.ResponseWriter, r *http.Request) {
@@ -44,27 +39,23 @@ func (uHandler *TodoHandler) AddTodo(rw http.ResponseWriter, r *http.Request) {
 
 	newTodo := models.Todo{}
 	err := newTodo.FromJSON(r.Body)
-
 	if err != nil {
+		uHandler.l.Println("Error while handling AddTodo method: " + err.Error())
 		resp := helpers.SetAndGetResponse(false, "Invalid JSON Data", nil, http.StatusBadRequest)
-		http.Error(rw, resp, http.StatusBadRequest)
+		http.Error(rw, resp, http.StatusOK)
 		return
 	}
 
-	todo, err := models.AddTodo(&newTodo, uHandler.Db)
-	if err != nil {
-		resp := helpers.SetAndGetResponse(false, err.Error(), nil, http.StatusBadRequest)
-		http.Error(rw, resp, http.StatusBadRequest)
-		return
-	}
+	todo := models.AddTodo(&newTodo)
 
-	rw.WriteHeader(http.StatusCreated)
 	err = todo.ToJSON(rw, "Todo created successfully")
 	if err != nil {
+		uHandler.l.Println("Error while handling AddTodo method: " + err.Error())
 		resp := helpers.SetAndGetResponse(false, err.Error(), nil, http.StatusBadRequest)
 		http.Error(rw, resp, http.StatusBadRequest)
 		return
 	}
+	uHandler.l.Println("AddTodo method successfully handled")
 }
 
 func (uHandler *TodoHandler) MarkTodo(rw http.ResponseWriter, r *http.Request) {
@@ -73,8 +64,9 @@ func (uHandler *TodoHandler) MarkTodo(rw http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
+		uHandler.l.Println("Error while handling MarkTodo method: " + err.Error())
 		resp := helpers.SetAndGetResponse(false, "Unable to convert id "+vars["id"]+": "+err.Error(), nil, http.StatusBadRequest)
-		http.Error(rw, resp, http.StatusBadRequest)
+		http.Error(rw, resp, http.StatusOK)
 		return
 	}
 
@@ -82,30 +74,27 @@ func (uHandler *TodoHandler) MarkTodo(rw http.ResponseWriter, r *http.Request) {
 		Id: id,
 	}
 
-	err = todo.UpdateTodo(uHandler.Db)
+	err = todo.UpdateTodo()
 	if err != nil {
+		uHandler.l.Println("Error while handling MarkTodo method: " + err.Error())
 		resp := helpers.SetAndGetResponse(false, err.Error(), nil, http.StatusBadRequest)
-		http.Error(rw, resp, http.StatusBadRequest)
+		http.Error(rw, resp, http.StatusOK)
 		return
 	}
 
-	rw.WriteHeader(http.StatusCreated)
 	response := helpers.SetAndGetResponse(true, "Todo with id:"+strconv.Itoa(todo.Id)+" successfully marked", nil, http.StatusOK)
 	fmt.Fprintln(rw, response)
+	uHandler.l.Println("MarkTodo method successfully handled")
 }
 
 func (uHandler *TodoHandler) DeleteAllTodos(rw http.ResponseWriter, _ *http.Request) {
 	uHandler.l.Println("Handle DeleteAllTodos method")
 
-	err := models.DeleteAllTodos(uHandler.Db)
-	if err != nil {
-		resp := helpers.SetAndGetResponse(false, err.Error(), nil, http.StatusBadRequest)
-		http.Error(rw, resp, http.StatusBadRequest)
-		return
-	}
+	models.DeleteAllTodos()
 
 	response := helpers.SetAndGetResponse(true, "All todos successfully deleted", nil, http.StatusOK)
 	fmt.Fprintln(rw, response)
+	uHandler.l.Println("DeleteAllTodos method successfully handled")
 }
 
 func (uHandler *TodoHandler) DeleteTodo(rw http.ResponseWriter, r *http.Request) {
@@ -114,8 +103,9 @@ func (uHandler *TodoHandler) DeleteTodo(rw http.ResponseWriter, r *http.Request)
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
+		uHandler.l.Println("Error while handling DeleteTodo method: " + err.Error())
 		resp := helpers.SetAndGetResponse(false, "Unable to convert id "+vars["id"]+": "+err.Error(), nil, http.StatusBadRequest)
-		http.Error(rw, resp, http.StatusBadRequest)
+		http.Error(rw, resp, http.StatusOK)
 		return
 	}
 
@@ -123,13 +113,16 @@ func (uHandler *TodoHandler) DeleteTodo(rw http.ResponseWriter, r *http.Request)
 		Id: id,
 	}
 
-	err = todo.DeleteTodo(uHandler.Db)
+	err = todo.DeleteTodo()
 	if err != nil {
+		uHandler.l.Println("Error while handling DeleteTodo method: " + err.Error())
 		resp := helpers.SetAndGetResponse(false, err.Error(), nil, http.StatusBadRequest)
-		http.Error(rw, resp, http.StatusBadRequest)
+		http.Error(rw, resp, http.StatusOK)
 		return
 	}
 
 	response := helpers.SetAndGetResponse(true, "Todo with id:"+strconv.Itoa(todo.Id)+" successfully deleted", nil, http.StatusOK)
 	fmt.Fprintln(rw, response)
+
+	uHandler.l.Println("DeleteTodo method successfully handled")
 }
